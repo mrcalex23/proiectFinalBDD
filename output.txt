@@ -1,0 +1,1 @@
+Please navigate to the `ski-rental-app` directory by running `cd ski-rental-app` and then run `npm start`.

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Rentals - Ski Rental</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <span>Hello, <strong><%= user %></strong></span>
+            <div>
+                <a href="/shop/dashboard">Rent Equipment</a>
+                <a href="/shop/rentals">My Rentals</a>
+                <a href="/auth/logout" style="color: #e74c3c;">Logout</a>
+            </div>
+        </div>
+
+        <h2>My Scheduled Rentals</h2>
+        <% if (rentals.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Equipment</th>
+                        <th>Type</th>
+                        <th>Scheduled Date</th>
+                        <th>Price</th>
+                        <th>Booked On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rentals.forEach(function(rental) { %>
+                        <tr>
+                            <td><%= rental.name %></td>
+                            <td><%= rental.type %></td>
+                            <td style="color: #2980b9; font-weight: bold;">
+                                <%= rental.scheduled_date ? new Date(rental.scheduled_date).toLocaleDateString() : 'N/A' %>
+                            </td>
+                            <td>$<%= rental.price %></td>
+                            <td style="color: #7f8c8d; font-size: 0.9em;">
+                                <%= new Date(rental.rental_date).toLocaleDateString() %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p style="text-align: center;">You haven't rented anything yet.</p>
+        <% } %>
+    </div>
+</body>
+</html>

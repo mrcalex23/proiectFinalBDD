@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Ski Rental</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <span>Hello, <strong><%= user %></strong></span>
+            <div>
+                <a href="/shop/dashboard">Rent Equipment</a>
+                <a href="/shop/rentals">My Rentals</a>
+                <a href="/auth/logout" style="color: #e74c3c;">Logout</a>
+            </div>
+        </div>
+
+        <h2 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Winter Season Gear</h2>
+        <p style="text-align:center; color: #666; margin-bottom: 30px;">Select the best equipment for your adventure on the slopes.</p>
+        
+        <% if (equipment.length > 0) { %>
+            <div class="equipment-grid">
+                <% equipment.forEach(function(item) { %>
+                    <div class="card">
+                        <img src="<%= item.image_url %>" alt="<%= item.name %>" class="card-img">
+                        <div class="card-body">
+                            <div class="card-title"><%= item.name %></div>
+                            <div class="card-type" style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #888;">
+                                <%= item.type %>
+                            </div>
+                            <div class="card-price">$<%= item.price %> <span style="font-size:0.8em; color:#999; font-weight:normal;">/ day</span></div>
+                            
+                            <form action="/shop/rent" method="POST">
+                                <input type="hidden" name="equipmentId" value="<%= item.id %>">
+                                <div style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 6px;">
+                                    <label style="font-size: 0.85em; color: #555; font-weight: 600;">Rental Date:</label>
+                                    <input type="date" name="rentalDate" required min="<%= new Date().toISOString().split('T')[0] %>" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px;">
+                                </div>
+                                <button type="submit">Rent This Gear</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div style="text-align:center; padding: 40px;">
+                <p style="font-size: 1.2em; color: #666;">All premium gear is currently booked!</p>
+                <a href="/shop/rentals" class="button" style="text-decoration: none; display: inline-block; background: #667eea; color: white; padding: 10px 20px; border-radius: 8px;">Check My Bookings</a>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
